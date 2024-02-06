@@ -15,8 +15,14 @@ contacts = {}
 
 @input_error
 def add_contact(name, phone):
-    contacts[name] = phone
-    return f"Contact {name} added with phone number {phone}"
+    if (len(phone) == 10 and phone.startswith("0")) or (len(phone) == 12 and phone.startswith("380")):
+        if name not in contacts:
+            contacts[name] = phone
+            return f"Contact {name} added with phone number {phone}"
+        else:
+            return f"Contact {name} already exists. Use 'change' command to update."
+    else:
+        return "Invalid phone number."
 
 @input_error
 def change_contact(name, phone):
@@ -24,11 +30,14 @@ def change_contact(name, phone):
         contacts[name] = phone
         return f"Phone number for {name} changed to {phone}"
     else:
-        raise KeyError
+        raise KeyError("Contact not found.")
 
 @input_error
 def get_phone(name):
-    return f"The phone number for {name} is {contacts[name]}"
+    if name in contacts:
+        return f"The phone number for {name} is {contacts[name]}"
+    else:
+        raise KeyError("Contact not found.")
 
 def show_all_contacts():
     if contacts:
@@ -47,19 +56,19 @@ def main():
             print("How can I help you?")
         elif user_input.startswith("add"):
             try:
-                _, name, phone = user_input.split()
+                _, name, phone = user_input.split(maxsplit=2)
                 print(add_contact(name, phone))
             except ValueError:
                 print("Invalid command. Please provide name and phone.")
         elif user_input.startswith("change"):
             try:
-                _, name, phone = user_input.split()
+                _, name, phone = user_input.split(maxsplit=2)
                 print(change_contact(name, phone))
             except ValueError:
                 print("Invalid command. Please provide name and phone.")
         elif user_input.startswith("phone"):
             try:
-                _, name = user_input.split()
+                _, name = user_input.split(maxsplit=1)
                 print(get_phone(name))
             except ValueError:
                 print("Invalid command. Please provide name.")
