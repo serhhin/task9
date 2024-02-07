@@ -22,7 +22,7 @@ def add_contact(name, phone):
         else:
             return f"Contact {name} already exists. Use 'change' command to update."
     else:
-        return "Invalid phone number."
+        return "Invalid phone number.You need to enter a phone number that starts with 0********* or with 380********* ."
 
 @input_error
 def change_contact(name, phone):
