@@ -54,7 +54,7 @@ def main():
         user_input = input("Enter your command: ").lower()
         if user_input.startswith("hello"):
             print("How can I help you?")
-        elif user_input.startswith("add"):
+        elif user_input.startswith("add "):
             try:
                 _, name, phone = user_input.split(maxsplit=2)
                 print(add_contact(name, phone))
